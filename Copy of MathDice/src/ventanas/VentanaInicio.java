@@ -13,6 +13,10 @@ import javax.swing.JPanel;
 import javax.swing.JTextField;
 import javax.swing.border.EmptyBorder;
 
+import com.mysql.jdbc.Connection;
+
+import Modelo.ConexionBD;
+import Modelo.JugadorBD;
 import juego.Jugador;
 
 public class VentanaInicio extends JFrame {
@@ -22,11 +26,17 @@ public class VentanaInicio extends JFrame {
 	private JTextField caja1;
 	private JTextField caja2;
 	private JTextField caja3;
-	private JTextField caja4;
-	
-	private VentanaInicio ref;
-	
+	private JTextField caja4;	
 	private JTextField caja5;
+	private VentanaInicio ref;	
+		
+	//Creamos la conexion a la base de datos. Asi la conexion se inicializa
+	private ConexionBD conexion1 = new ConexionBD();
+	//La conexion es un objeto de tipo Connection, que es el tipo de objeto que admite la clase JugadorBD, por eso, creamos un objeto tipo Connection y lo recojemos
+	//mediante el metodo getConexion de la clase ConexionBD. Nota: El casting al tipo Connection me lo ha exigido Java. 
+	private Connection conexion = (Connection) conexion1.getConexion();
+	//Inicializar la clase JugadorBD, a traves del constructor, para usar sus metodos posteriormente.
+	private JugadorBD jugadorBD = new JugadorBD(conexion);
 
 	//Crea un objeto de tipo VentanaInicio
 	public VentanaInicio() {
@@ -116,6 +126,9 @@ public class VentanaInicio extends JFrame {
 						//Con esta linea hacemos que la ventana se muestre.
 						//l.setVisible(true);
 						
+						//Este metodo introduce en la tabla de la base de datos el objeto jugador.
+						//NOTA: Va antes de llamar a la clase juego, para que, en caso de que hubiera un fallo a la hora de introducirlo, el juego no se ejecute.
+						JugadorBD.insertarJugador(caja1.getText(), caja2.getText(), caja5.getText(), Integer.valueOf(caja3.getText()));
 						
 						Juego ju = new Juego();
 						ju.inicializacion(j);
