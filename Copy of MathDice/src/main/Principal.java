@@ -15,7 +15,7 @@ public class Principal extends JFrame{
 					// Creamos un objeto de tipo VentanaInicio llamado frame
 					VentanaInicio frame = new VentanaInicio();
 					
-					// Aquí hacemos visible el objeto frame
+					//Aquí hacemos visible el objeto frame
 					frame.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
