@@ -3,6 +3,8 @@ import java.sql.Connection;
 import java.sql.SQLException;
 import java.sql.Statement;
 
+import juego.Jugador;
+
 public class JugadorBD {
 
 	
@@ -17,13 +19,13 @@ public class JugadorBD {
 		}
 		
 		//Metodo que permite insertar un usuario en la base de datos
-		public static void insertarJugador(String nombre,String apellido1,String apellido2,int edad){
+		public static void insertarJugador(Jugador j){
 			try{
 				//Conectarse a la conexion
 				orden = conexion.createStatement();
 				//Aqui metemos la sentecia SQL. En este caso es una sencilla sentencia de tipo INSERT.
 				//En sql, los VARCHAR van asi 'comilla simple'. "String normal de java" = en sql = '"STRING para SQL"'
-			    String sql = "INSERT INTO mathdice (nombre,apellido1,apellido2,edad) "+"VALUES ('"+nombre+"', '"+apellido1+"', '"+apellido2+"', "+edad+")";
+			    String sql = "INSERT INTO mathdice (nombre,apellido1,apellido2,edad) "+"VALUES ('"+j.getNombre()+"', '"+j.getPrimerApellido()+"', '"+j.getSegundoApellido()+"', "+j.getEdad()+")";
 			    //Ejecutar la sentencia SQL que hemos escrito en la linea de arriba
 			    orden.executeUpdate(sql);
 			    System.out.println("Usuario registrado con exito");

@@ -256,7 +256,7 @@ public class Login extends JPanel {
 		
 		ListenerDados ref=this;
 		
-		@Override
+		// P06 INNERCLASS
 		public void mouseClicked(MouseEvent e) {
 			
 			//Para saber que dado estamos utilizando

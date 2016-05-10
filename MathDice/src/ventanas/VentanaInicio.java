@@ -128,7 +128,7 @@ public class VentanaInicio extends JFrame {
 						
 						//Este metodo introduce en la tabla de la base de datos el objeto jugador.
 						//NOTA: Va antes de llamar a la clase juego, para que, en caso de que hubiera un fallo a la hora de introducirlo, el juego no se ejecute.
-						JugadorBD.insertarJugador(caja1.getText(), caja2.getText(), caja5.getText(), Integer.valueOf(caja3.getText()));
+						JugadorBD.insertarJugador(j);
 						
 						Juego ju = new Juego();
 						ju.inicializacion(j);
