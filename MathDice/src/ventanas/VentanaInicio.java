@@ -152,7 +152,18 @@ public class VentanaInicio extends JFrame {
 		boton1.setBounds(10, 278, 383, 23);
 		contentPane.add(boton1);
 		
-		
+		JButton btnPrueba = new JButton("Prueba");
+		btnPrueba.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				caja1.setText("Jugador");
+				caja2.setText("de prueba");
+				caja5.setText("para pruebas");
+				caja3.setText("18");
+				
+			}
+		});
+		btnPrueba.setBounds(320, 16, 89, 23);
+		contentPane.add(btnPrueba);
 		
 		
 	}

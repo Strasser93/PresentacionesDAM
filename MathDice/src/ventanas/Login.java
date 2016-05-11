@@ -38,11 +38,14 @@ public class Login extends JPanel {
 	private int valordado3;
 	private int valordado4;
 	private int valordado5;
+	private int valordado6;
 	
 	//Entrega p05
 	private JTextField sumDados;
 	private JButton botonMenos;
-	private Boolean alternando = false; 
+	private Boolean alternando = false;
+	
+	private Boolean botonPulsable = true;
 	
 	//Variables necesarias para recoger la operacion que se esta realizando
 	//una sera 0 porque es el resultado final y se inicializa en 0
@@ -68,7 +71,7 @@ public class Login extends JPanel {
 		//Label1 - Que contiene una concatenacion de String formado por la cadena ".." 
 		//+ la propiedad nombre del jugador (que le estamos pasando por parametros)
 		JLabel label1 = new JLabel("Bienvenido jugador "+j.getNombre());
-		label1.setBounds(534, 79, 150, 14);
+		label1.setBounds(534, 79, 263, 14);
 		add(label1);
 		
 	
@@ -101,7 +104,7 @@ public class Login extends JPanel {
 		valordado5 = (int) Math.floor(Math.random()*(5-0+1)+0);
 		
 		//dodecaedro
-		int valordado6 = (int) Math.floor(Math.random()*(11-0+1)+0);
+		valordado6 = (int) Math.floor(Math.random()*(11-0+1)+0);
 		
 		
 		//Creamos JLabel en la ventana
@@ -205,6 +208,7 @@ public class Login extends JPanel {
 		JButton botonMathdice = new JButton("MATHDICE ");
 		botonMathdice.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) { 
+				
 										//length 3 para obligar a hacer una operacion (numero +/- numero)
 				if(sumDados.getText().length()>=3){
 					labelResultado.setText(String.valueOf(resultadoFinal));
@@ -212,12 +216,23 @@ public class Login extends JPanel {
 					if(valordado6+1==resultadoFinal){
 						resultadoenTexto.setText("HAS GANADO !");
 						botonRelanzar.setEnabled(true);
+						botonMas.setEnabled(false);
+						botonMenos.setEnabled(false);
+						labelResultado.setVisible(true);
+						resultadoenTexto.setVisible(true);
+						System.out.print("Resultado de valordado6="+(valordado6+1)+" valor resultado final="+resultadoFinal);
 						// ! = indica negacion de lo siguiente que se escribe. (si esto no es verdad, haz esto)
 					}else if(!(valordado6+1==resultadoFinal)){ 
 						resultadoenTexto.setText("VUELVE A INTENTARLO !");
 						botonRelanzar.setEnabled(true);
+						botonMas.setEnabled(false);
+						botonMenos.setEnabled(false);
+						labelResultado.setVisible(true);
+						resultadoenTexto.setVisible(true);
+						System.out.print("Resultado de valordado6="+(valordado6+1)+" valor resultado final="+resultadoFinal);
 					}
 				}
+				
 			}
 		});
 		botonMathdice.setBounds(471, 490, 252, 48);
@@ -235,10 +250,57 @@ public class Login extends JPanel {
 		//boton para relanzar los dados
 		botonRelanzar = new JButton("JUEGA DE NUEVO !");
 		botonRelanzar.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent arg0) { 
-				//creamos una nueva ventana, la hacemos visible
-				Login l2 = new Login(j);
-				l2.setVisible(true);
+		public void actionPerformed(ActionEvent arg0) {
+				
+//Asi se relanza la aplicacion
+				
+				//reiniciamos todas las variables de control de elementos del juego.				
+				alternando = false;				
+				resultadoFinal = 0;
+				controladorOperacion =2;
+				botonMas.setEnabled(true);
+				botonMenos.setEnabled(true);
+				botonPulsable=true;
+				sumDados.setText("");
+				labelResultado.setVisible(false);
+				resultadoenTexto.setVisible(false);
+				botonRelanzar.setEnabled(false);
+				dado1.setEnabled(true);
+				dado2.setEnabled(true);
+				dado3.setEnabled(true);
+				dado4.setEnabled(true);
+				dado5.setEnabled(true);
+				
+				//Volvemos a calcular un valor para los dados				
+				valordado1 = (int) Math.floor(Math.random()*(2-0+1)+0);
+				valordado2 = (int) Math.floor(Math.random()*(2-0+1)+0);
+				valordado3 = (int) Math.floor(Math.random()*(5-0+1)+0);
+				valordado4 = (int) Math.floor(Math.random()*(5-0+1)+0);
+				valordado5 = (int) Math.floor(Math.random()*(5-0+1)+0);				
+				valordado6 = (int) Math.floor(Math.random()*(11-0+1)+0);
+				
+				//Cambiamos el dado
+				dado1.setIcon(dados3[valordado1]);				
+				dado1.setText(String.valueOf(valordado1));
+				dado2.setIcon(dados3[valordado2]);
+				dado2.setText(String.valueOf(valordado2));			
+				dado3.setIcon(dados6[valordado3]);
+				dado3.setText(String.valueOf(valordado3));
+				dado4.setIcon(dados6[valordado4]);
+				dado4.setText(String.valueOf(valordado4));
+				dado5.setIcon(dados6[valordado5]);
+				dado5.setText(String.valueOf(valordado5));
+				dado6.setIcon(dados12[valordado6]);
+				dado6.setText(String.valueOf(valordado6));
+				
+				//Le volvemos a añadir los mouseListener
+				dado1.addMouseListener(new ListenerDados());
+				dado2.addMouseListener(new ListenerDados());
+				dado3.addMouseListener(new ListenerDados());				
+				dado4.addMouseListener(new ListenerDados());
+				dado5.addMouseListener(new ListenerDados());
+				
+				
 				
 				
 			}
@@ -252,11 +314,12 @@ public class Login extends JPanel {
 	
 	}
 	
+	// P06 INNERCLASS
 	private class ListenerDados implements MouseListener {
 		
 		ListenerDados ref=this;
 		
-		// P06 INNERCLASS
+		
 		public void mouseClicked(MouseEvent e) {
 			
 			//Para saber que dado estamos utilizando
@@ -268,12 +331,13 @@ public class Login extends JPanel {
 				
 				//Recogemos el valor en forma de integer de la tirada del dado (lo que vale el dado)
 				int valorDado=Integer.valueOf(j.getText());
-				j.setEnabled(false);
+				botonPulsable = false ;
+				j.setEnabled(botonPulsable);
 				String aux=sumDados.getText(); //<- Se coge el texto que exista para actualizar sin perder los datos ya introducidos
 				String aux2=aux + String.valueOf(valorDado+1); //+1 porque el contador empieza ya con valor 0
 				sumDados.setText(aux2);
 				
-				//Eliminamos el MouseListener referenciado al objeto para que no se puede clickar 2 veces
+				//Se elimina el MouseListener referenciado al objeto para que no se puede clickar 2 veces
 				j.removeMouseListener(ref);
 				
 				alternando=true;
