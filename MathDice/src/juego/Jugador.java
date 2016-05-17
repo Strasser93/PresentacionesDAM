@@ -71,4 +71,8 @@ public class Jugador {
 			puntos=pun;
 		}
 		
+		public String toString(){
+			return this.nombre+" "+this.primerapellido;
+		}
+		
 }

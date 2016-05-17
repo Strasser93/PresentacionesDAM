@@ -1,7 +1,10 @@
 package Modelo;
 import java.sql.Connection;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+
+import javax.swing.JComboBox;
 
 import juego.Jugador;
 
@@ -50,5 +53,49 @@ public class JugadorBD {
 				         se.printStackTrace();
 				      }
 				}
+		}
+		
+		
+		
+		//Metodo para rellenar el JComboBox a partir de los datos de la base de datos
+		public void extraerJugadoresBD(JComboBox jc){
+			ResultSet rs;
+			try{
+			  orden = conexion.createStatement();
+		      String sql = "SELECT nombre, apellido1, apellido2, edad FROM mathdice";
+		      rs = orden.executeQuery(sql);
+		      //Cogemos los usuarios
+		      while(rs.next()){
+		    	  String nombreJugadorBD=rs.getString("nombre");
+		    	  String apellido1JugadorBD=rs.getString("apellido1");
+		    	  String apellido2JugadorBD=rs.getString("apellido2");
+		    	  Integer edadJugadorBD=rs.getInt("edad");
+		    	  
+		    	  Jugador u=new Jugador(nombreJugadorBD,apellido1JugadorBD,apellido2JugadorBD,edadJugadorBD);	      
+			      jc.addItem(u);
+			      
+		      }
+		      //Debemos cerrar la conexion
+		      rs.close();
+			}catch(SQLException se){
+				      //Se produce un error con la consulta
+				      se.printStackTrace();
+			}catch(Exception e){
+				      //Se produce cualquier otro error
+				      e.printStackTrace();
+			}finally{
+			      //Cerramos los recursos
+			      try{
+			         if(orden!=null)
+			        	 conexion.close();
+			      }catch(SQLException se){
+			      }
+			      try{
+			         if(conexion!=null)
+			        	 conexion.close();
+			      	 }catch(SQLException se){
+			         se.printStackTrace();
+			      	 }//end finally try
+			}
 		}
 	}

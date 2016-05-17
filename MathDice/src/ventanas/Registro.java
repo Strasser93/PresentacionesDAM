@@ -19,7 +19,7 @@ import Modelo.ConexionBD;
 import Modelo.JugadorBD;
 import juego.Jugador;
 
-public class VentanaInicio extends JFrame {
+public class Registro extends JFrame {
 
 	public JPanel contentPane;
 
@@ -28,7 +28,7 @@ public class VentanaInicio extends JFrame {
 	private JTextField caja3;
 	private JTextField caja4;	
 	private JTextField caja5;
-	private VentanaInicio ref;	
+	private Registro ref;	
 		
 	//Creamos la conexion a la base de datos. Asi la conexion se inicializa
 	private ConexionBD conexion1 = new ConexionBD();
@@ -39,7 +39,7 @@ public class VentanaInicio extends JFrame {
 	private JugadorBD jugadorBD = new JugadorBD(conexion);
 
 	//Crea un objeto de tipo VentanaInicio
-	public VentanaInicio() {
+	public Registro() {
 
 
 		// Propiedades de ventana
@@ -130,7 +130,7 @@ public class VentanaInicio extends JFrame {
 						//NOTA: Va antes de llamar a la clase juego, para que, en caso de que hubiera un fallo a la hora de introducirlo, el juego no se ejecute.
 						JugadorBD.insertarJugador(j);
 						
-						Juego ju = new Juego();
+						ContenedorVentanas ju = new ContenedorVentanas();
 						ju.inicializacion(j);
 						
 						

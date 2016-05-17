@@ -2,7 +2,9 @@ package main;
 
 import java.awt.EventQueue;
 import javax.swing.JFrame;
-import ventanas.VentanaInicio;
+
+import ventanas.Login;
+import ventanas.Registro;
 
 public class Principal extends JFrame{
 	
@@ -13,7 +15,11 @@ public class Principal extends JFrame{
 			public void run() {
 				try {
 					// Creamos un objeto de tipo VentanaInicio llamado frame
-					VentanaInicio frame = new VentanaInicio();
+							
+					Login frame = new Login();
+					
+					//Registro frame = new Registro();
+					
 					
 					//Aquí hacemos visible el objeto frame
 					frame.setVisible(true);
