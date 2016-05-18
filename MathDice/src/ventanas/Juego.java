@@ -12,6 +12,7 @@ import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 
+import Modelo.JugadorBD;
 import juego.Jugador;
 
 import javax.swing.JLabel;
@@ -19,6 +20,8 @@ import javax.swing.JTextField;
 import javax.swing.JButton;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
+import javax.swing.SwingConstants;
+import java.awt.Font;
 
 public class Juego extends JPanel {
 
@@ -57,7 +60,10 @@ public class Juego extends JPanel {
 	
 	//referenciamos la ventana Login para ser usada en el boton "relanzar"
 	private Juego ref;
+	private JTextField puntuacion;
 
+	private static JLabel label1;
+	
 	//Creacion de la ventana
 	public Juego(Jugador j) {
 		
@@ -70,7 +76,7 @@ public class Juego extends JPanel {
 		
 		//Label1 - Que contiene una concatenacion de String formado por la cadena ".." 
 		//+ la propiedad nombre del jugador (que le estamos pasando por parametros)
-		JLabel label1 = new JLabel("Bienvenido jugador "+j.getNombre());
+		label1 = new JLabel("Bienvenido jugador "+j.getNombre());
 		label1.setBounds(534, 79, 263, 14);
 		add(label1);
 		
@@ -209,7 +215,7 @@ public class Juego extends JPanel {
 		botonMathdice.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) { 
 				
-				//length 3 para obligar a hacer una operacion (numero +/- numero)
+										//length 3 para obligar a hacer una operacion (numero +/- numero)
 				if(sumDados.getText().length()>=3){
 					labelResultado.setText(String.valueOf(resultadoFinal));
 					//comprobomaos que el resultado acumulado sea igual al dodecaedro
@@ -220,6 +226,10 @@ public class Juego extends JPanel {
 						botonMenos.setEnabled(false);
 						labelResultado.setVisible(true);
 						resultadoenTexto.setVisible(true);
+						//Actualizo La Puntuacion del Jugador
+						JugadorBD.jugadorGana(j);
+						puntuacion.setText(String.valueOf(j.getPuntos()));
+						Perfil.cambiarPuntosPantalla(String.valueOf(j.getPuntos()));
 						
 						// ! = indica negacion de lo siguiente que se escribe. (si esto no es verdad, haz esto)
 					}else if(!(valordado6+1==resultadoFinal)){ 
@@ -252,7 +262,7 @@ public class Juego extends JPanel {
 		botonRelanzar.addActionListener(new ActionListener() {
 		public void actionPerformed(ActionEvent arg0) {
 				
-			//Asi se relanza la aplicacion
+//Asi se relanza la aplicacion
 				
 				//reiniciamos todas las variables de control de elementos del juego.				
 				alternando = false;				
@@ -310,8 +320,24 @@ public class Juego extends JPanel {
 		add(botonRelanzar);
 		
 		
+		//Para ver la puntuacion del jugador
+		puntuacion = new JTextField();
+		puntuacion.setFont(new Font("Tahoma", Font.BOLD, 18));
+		puntuacion.setHorizontalAlignment(SwingConstants.CENTER);
+		puntuacion.setEditable(false);
+		puntuacion.setBounds(497, 104, 240, 48);
+		add(puntuacion);
+		puntuacion.setColumns(10);
+		puntuacion.setText(String.valueOf(j.getPuntos()));
+		
+		
 		
 	
+	}
+	
+	public static void cambiarLabelNombre(String s){
+		String cadena= "Bienvenido jugador "+s;
+		label1.setText(cadena);
 	}
 	
 	// P06 INNERCLASS

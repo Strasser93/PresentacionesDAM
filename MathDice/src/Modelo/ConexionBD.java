@@ -5,9 +5,12 @@ import java.sql.DriverManager;
 
 public class ConexionBD {
 	//Un objeto de tipo connection que se inicializa a null (relacionado con el try catch)
-	private Connection connect = null;
+	private static Connection connect = null;
+	//Instanciar=crear objeto
+	//Preparar un huevo para que cuando se cree la conexion, se almacene y no se creen mas a pesar de que puede parecer que estamos creando mas
+	private static ConexionBD INSTANCE = null;
 	
-	public ConexionBD() {
+	private ConexionBD() {
 		try {
 		     //Cargar la clase en ejecucion del driver que usemos 
 		      Class.forName("com.mysql.jdbc.Driver");
@@ -29,7 +32,11 @@ public class ConexionBD {
 	
 	//El profesor explico que este metodo es util porque vamos a abrir la conexion 1 vez, y la mantendremos abierta hasta el final de ejecucion
 	//Con este metodo recuperamos la conexion en curso.
-	public Connection getConexion(){
+	public static Connection getConexion(){
+		if (INSTANCE==null){
+			INSTANCE=new ConexionBD();
+		}
+		
 			return connect;
 	}
 

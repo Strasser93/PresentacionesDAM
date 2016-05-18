@@ -31,12 +31,12 @@ public class Registro extends JFrame {
 	private Registro ref;	
 		
 	//Creamos la conexion a la base de datos. Asi la conexion se inicializa
-	private ConexionBD conexion1 = new ConexionBD();
+	//private ConexionBD conexion1 = new ConexionBD();
 	//La conexion es un objeto de tipo Connection, que es el tipo de objeto que admite la clase JugadorBD, por eso, creamos un objeto tipo Connection y lo recojemos
 	//mediante el metodo getConexion de la clase ConexionBD. Nota: El casting al tipo Connection me lo ha exigido Java. 
-	private Connection conexion = (Connection) conexion1.getConexion();
+	//private Connection conexion = (Connection) conexion1.getConexion();
 	//Inicializar la clase JugadorBD, a traves del constructor, para usar sus metodos posteriormente.
-	private JugadorBD jugadorBD = new JugadorBD(conexion);
+	//private JugadorBD jugadorBD = new JugadorBD(conexion);
 
 	//Crea un objeto de tipo VentanaInicio
 	public Registro() {

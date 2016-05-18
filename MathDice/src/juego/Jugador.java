@@ -2,6 +2,7 @@ package juego;
 
 public class Jugador {
 	//Atributos (o propiedades)
+		private Integer id;
 		private String nombre;
 		private String primerapellido;
 		private String segundoapellido;
@@ -20,6 +21,7 @@ public class Jugador {
 			}
 			
 			//Dentro del constructor, SE RELLENAN los atributos POR PRIMERA VEZ.
+			this.id=0;
 			this.nombre=nom;
 			this.primerapellido=ape1;
 			this.segundoapellido=ape2;
@@ -32,6 +34,18 @@ public class Jugador {
 		
 		//Métodos getter
 		
+		public Integer getId() {
+			return id;
+		}
+
+
+
+		public void setId(Integer id) {
+			this.id = id;
+		}
+
+
+
 		//Obtiene el VALOR de una propiedad
 		public String getNombre(){
 			return nombre;
